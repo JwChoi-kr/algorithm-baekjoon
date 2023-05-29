@@ -29,11 +29,8 @@ public class Main {
         }
 
         continentNaming();
-
         buildBridge();
         
-        // debug();
-
         System.out.println(min);
         
     }
@@ -93,21 +90,19 @@ public class Main {
                         }
                     }
 
-                    
                     if (!q.isEmpty()) { // q가 비었다는건 해안선이 아니라는 뜻이므로 pass
                         boolean flag = false;
 
                         while (!flag) {
                             Spot s = q.poll();
 
+                            if (visited[s.x][s.y] >= min) { // 이미 min을 넘었으니 탐색할 필요 X
+                                break;
+                            }
+
                             for (int k = 0; k < 4; k++) {
                                 int nx = s.x + dx[k];
                                 int ny = s.y + dy[k];
-        
-                                if (visited[s.x][s.y] >= min) {
-                                    flag = true;
-                                    break;
-                                }
         
                                 if (nx < 0 || ny < 0 || nx > n - 1 || ny > n - 1) {
                                     continue;
@@ -127,15 +122,6 @@ public class Main {
                         }
                     }
                 }
-            }
-        }
-    }
-
-    static void debug() {
-        for (int i = 0; i < n; i++) {
-            System.out.println();
-            for (int j = 0; j < n; j++) {
-                System.out.print(map[i][j] + " ");
             }
         }
     }
