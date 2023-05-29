@@ -24,32 +24,33 @@ public class Main {
 
             for (int i = 1; i <= n; i++) {
                 if (!visited[i]) {  // 처리한 적 없는 i에 대해서만
+                    Stack<Integer> s = new Stack<>();
+                    s.add(i);
                     visited[i] = true;
-                    if (i != arr[i]) {  // 자기자신을 가리키는 경우는 빼고
-                        Stack<Integer> s = new Stack<>();
-                        s.add(i);
 
-                        while (true) {
-                            if (!visited[arr[s.peek()]]) {  // 방문한 곳을 못찾으면 계속 돈다.
-                                visited[arr[s.peek()]] = true;
-                                s.add(arr[s.peek()]);
+                    while (true) {
+                        if (!visited[arr[s.peek()]]) {  // 방문한 곳을 못찾으면 계속 돈다.
+                            visited[arr[s.peek()]] = true;
+                            s.add(arr[s.peek()]);
+                        } else {  // 방문한 곳을 찾았다!
+                            if (s.firstElement() == arr[s.peek()]) {  // 조가 딱 완성
+                                break;
                             } else {
-                                if (s.firstElement() == arr[s.peek()]) {  // 조가 딱 완성
-                                    break;
-                                } else {
-                                    if (!s.contains(arr[s.peek()])) {
-                                        ans += s.size();  // 아무것도 안이어짐
-                                    } else {
-                                        int temp = arr[s.peek()];
-                                        while (true) {
-                                            if (s.pop() == temp) {
-                                                ans += s.size();
-                                                break;
-                                            }
-                                        }
+                                int temp = arr[s.peek()];
+                                int size = s.size();
+
+                                while (true) {
+                                    if (s.isEmpty()) {  // 조가 아예 안생김
+                                        ans += size;
+                                        break;
                                     }
-                                    break;
+
+                                    if (s.pop() == temp) {  // 조가 만들어지고 나머지는 떨궈짐
+                                        ans += s.size();
+                                        break;
+                                    }
                                 }
+                                break;
                             }
                         }
                     }
