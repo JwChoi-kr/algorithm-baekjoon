@@ -11,34 +11,32 @@ public class Main {
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         
-        arr[0] = Integer.parseInt(st.nextToken());
         int length = 0;
+        arr[length++] = Integer.parseInt(st.nextToken());
 
         for (int i = 1; i < n; i++) {
             int x = Integer.parseInt(st.nextToken());
             
-            if (x > arr[length]) {
-                arr[++length] = x;
-            } else if (x < arr[length]) {
+            if (x > arr[length - 1]) {
+                arr[length++] = x;
+            } else {
                 int lo = 0;
-                int hi = length + 1;
+                int hi = length;
 
                 while (lo < hi) {
                     int mid = (lo + hi) / 2;
                     
-                    if (arr[mid] <= x) {
+                    if (arr[mid] < x) {
                         lo = mid + 1;
                     } else {
                         hi = mid;
                     }
                 }
 
-                if (lo == 0 || lo > 0 && arr[lo - 1] < x) {
-                    arr[lo] = x;
-                }
+                arr[lo] = x;
             }
         }
 
-        System.out.println(length + 1);
+        System.out.println(length);
     }
 }
